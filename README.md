@@ -1,0 +1,9 @@
+# LazyWorker
+LazyWorker for lazy developers 
+
+## For using it properly
+1) download both folders
+2) in each of them open terminal
+3) npm install
+4) npm run start
+5) enjoy
