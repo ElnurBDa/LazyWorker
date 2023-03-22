@@ -8,4 +8,7 @@ LazyWorker for lazy developers
 4) npm run start
 5) enjoy
 
-there would be problems with nestjs
+there would be problems with nestjs, you will need to install some packets.
+
+If you are not Elnur, better ask Elnur.
+
