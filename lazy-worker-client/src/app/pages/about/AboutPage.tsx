@@ -52,7 +52,7 @@ const AboutPage = () => {
   }
 
   return (
-    <>
+    <div style={{'marginLeft':'10%'}}>
       <h1>My interests</h1>
       <div className="about-wrapper">
         {user.interests.map((interest, index) => {
@@ -64,7 +64,7 @@ const AboutPage = () => {
         <input value={newInterest} style={{'margin':'1rem'}} onChange={handleChange}></input>
         <button onClick={handleAddInterest}>ADD</button>
       </span>
-    </>
+    </div>
   )
 }
 export default AboutPage

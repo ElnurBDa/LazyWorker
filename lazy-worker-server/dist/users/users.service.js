@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
+const bcrypt = require("bcrypt");
 let UsersService = class UsersService {
     constructor() {
         this.users = [
@@ -15,7 +16,7 @@ let UsersService = class UsersService {
                 userId: 1,
                 email: 'elnur@gmail.com',
                 name: 'Elnur',
-                password: 'elnur',
+                password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye',
                 interests: ['Certified Slave', 'backend', 'sufferings'],
                 created_at: new Date('2023-03-08'),
             },
@@ -23,7 +24,7 @@ let UsersService = class UsersService {
                 userId: 2,
                 email: 'elcan@gmail.com',
                 name: 'Elcan',
-                password: 'elcan',
+                password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2',
                 interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
                 created_at: new Date('2023-03-08'),
             },
@@ -39,6 +40,9 @@ let UsersService = class UsersService {
             throw new common_1.ConflictException('User with that email already exists');
         }
         const maxUserId = Math.max(...this.users.map(user => user.userId));
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(user.password, salt);
+        user.password = hashPassword;
         const newuser = {
             userId: maxUserId + 1,
             email: user.email,
@@ -47,6 +51,7 @@ let UsersService = class UsersService {
             interests: [],
             created_at: new Date(),
         };
+        console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`);
         this.users.push(newuser);
         return newuser;
     }
@@ -59,10 +64,14 @@ let UsersService = class UsersService {
     }
     async validateUser(email, password) {
         console.log(`[UsersService] validateUser, email: ${email}, password: ${password}`);
-        const user = this.users.find(user => user.email === email && user.password === password);
+        const user = this.users.find(user => user.email === email);
         if (user) {
             console.log('[UsersService] validateUser: found user', user);
-            return Object.assign(Object.assign({}, user), { password: undefined });
+            const match = await bcrypt.compare(password, user.password);
+            console.log('[UsersService] validateUser: matched', match);
+            if (match) {
+                return Object.assign(Object.assign({}, user), { password: undefined });
+            }
         }
         return undefined;
     }

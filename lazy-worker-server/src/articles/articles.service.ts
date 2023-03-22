@@ -42,7 +42,7 @@ export class ArticlesService {
     {
       id: 4,
       title: "Clown",
-      description: "idk, we need you.",
+      description: "idk, we need you... uwu",
       category: "Developer",
       author: "Sasha",
       date: new Date("2022-03-25"),

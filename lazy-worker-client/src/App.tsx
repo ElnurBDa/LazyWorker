@@ -47,6 +47,8 @@ function App() {
                 <Nav className="me-auto">
                   <Nav.Link href="/home">Home</Nav.Link>
                   {access_token ? <Nav.Link href="/my">Posts related to me</Nav.Link> : <Outlet />}
+                </Nav>
+                <Nav className="ms-auto">
                   {access_token ? (
                     <NavDropdown title={name} id="basic-nav-dropdown">
                       <NavDropdown.Item href="/about">My interests</NavDropdown.Item>

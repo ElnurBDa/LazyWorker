@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { IUser } from './users.interface';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -10,7 +11,7 @@ export class UsersService {
       userId: 1,
       email: 'elnur@gmail.com',
       name: 'Elnur',
-      password: 'elnur',
+      password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye', // hashed elnur
       interests: ['Certified Slave','backend','sufferings'],
       created_at:new Date('2023-03-08'),
     },
@@ -18,7 +19,7 @@ export class UsersService {
       userId: 2,
       email: 'elcan@gmail.com',
       name: 'Elcan',
-      password: 'elcan',
+      password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2', //hashed elcan
       interests: ['frontend','Certified Killer','sufferings','Developer'],
       created_at:new Date('2023-03-08'),
     },
@@ -36,6 +37,11 @@ export class UsersService {
     }
     const maxUserId = Math.max(...this.users.map(user => user.userId));
 
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(user.password, salt);
+    user.password = hashPassword;
+    
+
     const newuser: IUser = {
       userId: maxUserId+1,
       email:user.email,
@@ -44,6 +50,8 @@ export class UsersService {
       interests:[],
       created_at: new Date(),
     };
+
+    console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`)
     this.users.push(newuser);
 
     return newuser;
@@ -60,10 +68,18 @@ export class UsersService {
 
   async validateUser(email: string, password: string): Promise<IUser | undefined> {
     console.log(`[UsersService] validateUser, email: ${email}, password: ${password}`)
-    const user = this.users.find(user => user.email === email && user.password === password);
+
+    const user = this.users.find(user => user.email === email);
+
     if (user) {
       console.log('[UsersService] validateUser: found user', user)
-      return { ...user, password: undefined }
+
+      const match = await bcrypt.compare(password, user.password);
+      console.log('[UsersService] validateUser: matched', match)
+      if (match) {
+        return { ...user, password: undefined };
+      }
+
     }
     return undefined
   }

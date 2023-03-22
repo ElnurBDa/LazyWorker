@@ -9,6 +9,7 @@ import { selectAuthenticatedUser } from '../redux/slices/auth.slice'
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
+// these comments will not be removed by Elnur, definetely 
 const PrivateRoute = ({ ...rest }: RouteProps): React.ReactElement | null => {
   const { access_token } = useAppSelector(selectAuthenticatedUser)
   // return access_token ? <Route {...rest} /> : <Route {...rest} element={<Navigate replace to="/" />} />
