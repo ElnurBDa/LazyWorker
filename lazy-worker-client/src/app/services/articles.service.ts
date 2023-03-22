@@ -25,7 +25,7 @@ export const articlesAPI = createApi({
     }),
     getMyArticles: build.mutation<any, null>({
       query: () => ({
-        url: `my`,
+        url: `user`,
         method: 'GET',
       }),
     }),

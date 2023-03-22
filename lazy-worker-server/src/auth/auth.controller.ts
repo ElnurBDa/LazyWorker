@@ -29,6 +29,4 @@ export class AuthController {
     console.log(`[AuthController] getProfile`)
     return req.user;
   }
-
-
 }

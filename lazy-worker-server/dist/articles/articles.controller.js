@@ -24,9 +24,9 @@ let ArticlesController = class ArticlesController {
         console.log(`[ArticlesController] getAllArticles`);
         return this.articlesService.findAll();
     }
-    getMyArticles(req) {
-        console.log(`[ArticlesController] getMyArticles`, req.user.email);
-        return this.articlesService.findByOwnerEmail(req.user.email);
+    getUserArticles(req) {
+        console.log(`[ArticlesController] getUserArticles`, req.user);
+        return this.articlesService.findByUserEmail(req.user.email);
     }
 };
 __decorate([
@@ -37,12 +37,12 @@ __decorate([
 ], ArticlesController.prototype, "getAllArticles", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('my'),
-    __param(0, (0, common_1.Req)()),
+    (0, common_1.Get)('user'),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], ArticlesController.prototype, "getMyArticles", null);
+], ArticlesController.prototype, "getUserArticles", null);
 ArticlesController = __decorate([
     (0, common_1.Controller)('article'),
     __metadata("design:paramtypes", [articles_service_1.ArticlesService])

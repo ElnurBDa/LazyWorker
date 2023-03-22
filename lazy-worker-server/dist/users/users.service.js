@@ -15,14 +15,14 @@ let UsersService = class UsersService {
                 email: 'elnur@gmail.com',
                 name: 'Elnur',
                 password: 'elnur',
-                interests: ['frontend', 'backend', 'sufferings'],
+                interests: ['Certified Slave', 'backend', 'sufferings'],
                 created_at: new Date('2023-03-08'),
             },
             {
                 email: 'elcan@gmail.com',
                 name: 'Elcan',
                 password: 'elcan',
-                interests: ['frontend', 'backend', 'sufferings'],
+                interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
                 created_at: new Date('2023-03-08'),
             },
         ];
