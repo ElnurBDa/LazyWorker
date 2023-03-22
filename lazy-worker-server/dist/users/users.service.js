@@ -12,6 +12,7 @@ let UsersService = class UsersService {
     constructor() {
         this.users = [
             {
+                userId: 1,
                 email: 'elnur@gmail.com',
                 name: 'Elnur',
                 password: 'elnur',
@@ -19,6 +20,7 @@ let UsersService = class UsersService {
                 created_at: new Date('2023-03-08'),
             },
             {
+                userId: 2,
                 email: 'elcan@gmail.com',
                 name: 'Elcan',
                 password: 'elcan',
@@ -36,7 +38,9 @@ let UsersService = class UsersService {
         if (existingUser) {
             throw new common_1.ConflictException('User with that email already exists');
         }
+        const maxUserId = Math.max(...this.users.map(user => user.userId));
         const newuser = {
+            userId: maxUserId + 1,
             email: user.email,
             name: user.name,
             password: user.password,

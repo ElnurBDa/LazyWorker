@@ -7,6 +7,7 @@ export class UsersService {
 
   private users: IUser[] = [
     {
+      userId: 1,
       email: 'elnur@gmail.com',
       name: 'Elnur',
       password: 'elnur',
@@ -14,6 +15,7 @@ export class UsersService {
       created_at:new Date('2023-03-08'),
     },
     {
+      userId: 2,
       email: 'elcan@gmail.com',
       name: 'Elcan',
       password: 'elcan',
@@ -32,7 +34,10 @@ export class UsersService {
     if (existingUser) {
       throw new ConflictException('User with that email already exists');
     }
+    const maxUserId = Math.max(...this.users.map(user => user.userId));
+
     const newuser: IUser = {
+      userId: maxUserId+1,
       email:user.email,
       name:user.name,
       password:user.password,
