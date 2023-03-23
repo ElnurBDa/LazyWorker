@@ -10,7 +10,7 @@ export class ArticlesService {
 
   private readonly articles: IArticle[] = [
     {
-      id: 1,
+      postId: 1,
       title: "Killer",
       description: "I need a killer for personal needs...",
       category: "Certified Killer",
@@ -20,7 +20,7 @@ export class ArticlesService {
       redirectLink: "#",
     },
     {
-      id: 2,
+      postId: 2,
       title: "Slave",
       description: "I need a slave for selling it to mother America!",
       category: "Certified Slave",
@@ -30,7 +30,7 @@ export class ArticlesService {
       redirectLink: "#",
     },
     {
-      id: 3,
+      postId: 3,
       title: "Tree log",
       description: "Our 100 billion company needs a tree log for heating home, really really need(((",
       category: "Certified Tree log",
@@ -40,7 +40,7 @@ export class ArticlesService {
       redirectLink: "#",
     },
     {
-      id: 4,
+      postId: 4,
       title: "Clown",
       description: "idk, we need you... uwu",
       category: "Developer",

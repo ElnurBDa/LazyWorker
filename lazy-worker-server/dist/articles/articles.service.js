@@ -17,7 +17,7 @@ let ArticlesService = class ArticlesService {
         this.usersService = usersService;
         this.articles = [
             {
-                id: 1,
+                postId: 1,
                 title: "Killer",
                 description: "I need a killer for personal needs...",
                 category: "Certified Killer",
@@ -27,7 +27,7 @@ let ArticlesService = class ArticlesService {
                 redirectLink: "#",
             },
             {
-                id: 2,
+                postId: 2,
                 title: "Slave",
                 description: "I need a slave for selling it to mother America!",
                 category: "Certified Slave",
@@ -37,7 +37,7 @@ let ArticlesService = class ArticlesService {
                 redirectLink: "#",
             },
             {
-                id: 3,
+                postId: 3,
                 title: "Tree log",
                 description: "Our 100 billion company needs a tree log for heating home, really really need(((",
                 category: "Certified Tree log",
@@ -47,7 +47,7 @@ let ArticlesService = class ArticlesService {
                 redirectLink: "#",
             },
             {
-                id: 4,
+                postId: 4,
                 title: "Clown",
                 description: "idk, we need you... uwu",
                 category: "Developer",
