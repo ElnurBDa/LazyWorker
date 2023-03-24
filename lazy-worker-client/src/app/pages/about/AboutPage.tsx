@@ -56,6 +56,7 @@ const AboutPage = () => {
       <h1>My interests</h1>
       <div className="about-wrapper">
         {user.interests.map((interest, index) => {
+          if (interest==="") return;
           return (
             <div key={index} className="interest" onClick={handleRemove}>{interest}</div>)
             })}

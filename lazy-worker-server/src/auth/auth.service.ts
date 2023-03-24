@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { IUser } from 'src/users/users.interface';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -15,26 +15,33 @@ export class AuthService {
     console.log(
       `[AuthService] validateUser: email=${email}, password=${password}`,
     );
-    return await this.usersService.validateUser(email, password);
+    const user =await this.usersService.validateUser(email, password);
+    let interests = user.interests.split('_');
+    interests = interests?interests:[];
+    return {interests, ...user};
   }
 
   async login(user: any): Promise<any> {
     console.log(`[AuthService] login: user=${JSON.stringify(user)}`);
+    const interests = user.interests.split('_');
     const payload = {
       email: user.email,
       name: user.name,
-      interests: user.interests,
+      interests: interests?interests:[],
     };
     return {
       access_token: this.jwtService.sign(payload),
       email: user.email,
       name: user.name,
-      interests: user.interests,
+      interests: interests?interests:[],
     };
   }
 
-  async register(user: any): Promise<IUser | undefined> {
-    console.log(`[AuthService] register: user=${JSON.stringify(user)}`);
-    return this.usersService.addUser(user);
+  async register(req: any): Promise<User | undefined> {
+    console.log(`[AuthService] register: user=${JSON.stringify(req)}`);
+    const user =await this.usersService.addUser(req)
+    let interests = user.interests.split('_');
+    interests = interests?interests:[];
+    return {interests, ...user};
   }
 }

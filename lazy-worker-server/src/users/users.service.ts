@@ -4,79 +4,56 @@ import {
   ConflictException,
   Injectable,
 } from '@nestjs/common';
-import { IUser } from './users.interface';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  private users: IUser[] = [
-    {
-      userId: 1,
-      email: 'elnur@gmail.com',
-      name: 'Elnur',
-      password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye', // hashed elnur
-      interests: ['Certified Slave', 'backend', 'sufferings'],
-      createdAt: new Date('2023-03-08'),
-    },
-    {
-      userId: 2,
-      email: 'elcan@gmail.com',
-      name: 'Elcan',
-      password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2', //hashed elcan
-      interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
-      createdAt: new Date('2023-03-08'),
-    },
-  ];
+  @InjectRepository(User)
+  private readonly repository: Repository<User>;
 
-  async addUser(user: any): Promise<IUser | undefined> {
+  async addUser(user: any): Promise<User> {
     console.log(`[UsersService] addUser: user=${JSON.stringify(user)}`);
-
     if (!user.email || !user.name || !user.password) {
       throw new BadRequestException('Missing required fields');
     }
-    const existingUser = this.users.find(_user => _user.email === user.email);
-    if (existingUser) {
-      throw new ConflictException('User with that email already exists');
-    }
-    const maxUserId = Math.max(...this.users.map(user => user.userId));
+    
+    const newuser: User = new User();
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(user.password, salt);
-    user.password = hashPassword;
+    
+    newuser.password = hashPassword;
+    newuser.email = user.email;
+    newuser.name = user.name;
+    newuser.interests = "";
+    newuser.createdAt = new Date();
+    newuser.updatedAt = newuser.createdAt;
 
-    const newuser: IUser = {
-      userId: maxUserId + 1,
-      email: user.email,
-      name: user.name,
-      password: user.password,
-      interests: [],
-      createdAt: new Date(),
-    };
-
-    console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`);
-    this.users.push(newuser);
-
-    return newuser;
+    return this.repository.save(newuser);
   }
 
-  async findOne(email: string): Promise<IUser | undefined> {
-    return this.users.find(user => user.email === email);
+  async findOne(email: string): Promise<User|undefined> {
+    return this.repository.findOne({where : {email:email}});
   }
 
   async getInterests(email: string): Promise<string[] | undefined> {
-    const user = this.findOne(email);
-    return (await user).interests;
+    const user = await this.findOne(email);
+    console.log('[UserService] getInterests ', user.interests.split('_'))
+    return user.interests.split('_');
   }
 
   async validateUser(
     email: string,
     password: string,
-  ): Promise<IUser | undefined> {
+  ): Promise<User | undefined> {
     console.log(
       `[UsersService] validateUser, email: ${email}, password: ${password}`,
     );
 
-    const user = this.users.find(user => user.email === email);
+    const user = await this.findOne(email);
 
     if (user) {
       console.log('[UsersService] validateUser: found user', user);
@@ -93,32 +70,24 @@ export class UsersService {
   async addInterest(
     interest: string,
     email: string,
-  ): Promise<IUser | undefined> {
+  ): Promise<User | undefined> {
     const user = await this.findOne(email);
     if (!user) return undefined;
-    if (user.interests.includes(interest)) return user;
-    user.interests.push(interest);
-    this.userSave(user);
-    return user;
+    if (user.interests.split('_').includes(interest)) return user;
+    user.interests = user.interests + "_" + interest;
+    return this.repository.save(user);
   }
 
   async removeInterest(
     interest: string,
     email: string,
-  ): Promise<IUser | undefined> {
+  ): Promise<User | undefined> {
     const user = await this.findOne(email);
     if (!user) return undefined;
-    user.interests = user.interests.filter(
+    user.interests = user.interests.split('_').filter(
       userInterest => userInterest !== interest,
-    );
-    this.userSave(user);
-    return user;
-  }
+    ).join('_');
 
-  async userSave(user: IUser) {
-    this.users = [
-      ...this.users.filter(_user => _user.email !== user.email),
-      user,
-    ];
+    return this.repository.save(user);
   }
 }

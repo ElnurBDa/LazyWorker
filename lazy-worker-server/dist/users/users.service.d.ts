@@ -1,11 +1,10 @@
-import { IUser } from './users.interface';
+import { User } from './user.entity';
 export declare class UsersService {
-    private users;
-    addUser(user: any): Promise<IUser | undefined>;
-    findOne(email: string): Promise<IUser | undefined>;
+    private readonly repository;
+    addUser(user: any): Promise<User>;
+    findOne(email: string): Promise<User | undefined>;
     getInterests(email: string): Promise<string[] | undefined>;
-    validateUser(email: string, password: string): Promise<IUser | undefined>;
-    addInterest(interest: string, email: string): Promise<IUser | undefined>;
-    removeInterest(interest: string, email: string): Promise<IUser | undefined>;
-    userSave(user: IUser): Promise<void>;
+    validateUser(email: string, password: string): Promise<User | undefined>;
+    addInterest(interest: string, email: string): Promise<User | undefined>;
+    removeInterest(interest: string, email: string): Promise<User | undefined>;
 }

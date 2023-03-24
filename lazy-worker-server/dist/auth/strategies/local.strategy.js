@@ -19,7 +19,7 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         super({
             usernameField: 'email',
             passwordField: 'password',
-            passReqToCallback: true
+            passReqToCallback: true,
         });
         this.authService = authService;
     }

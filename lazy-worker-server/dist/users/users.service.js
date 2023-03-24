@@ -5,66 +5,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const user_entity_1 = require("./user.entity");
 let UsersService = class UsersService {
-    constructor() {
-        this.users = [
-            {
-                userId: 1,
-                email: 'elnur@gmail.com',
-                name: 'Elnur',
-                password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye',
-                interests: ['Certified Slave', 'backend', 'sufferings'],
-                createdAt: new Date('2023-03-08'),
-            },
-            {
-                userId: 2,
-                email: 'elcan@gmail.com',
-                name: 'Elcan',
-                password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2',
-                interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
-                createdAt: new Date('2023-03-08'),
-            },
-        ];
-    }
     async addUser(user) {
         console.log(`[UsersService] addUser: user=${JSON.stringify(user)}`);
         if (!user.email || !user.name || !user.password) {
             throw new common_1.BadRequestException('Missing required fields');
         }
-        const existingUser = this.users.find(_user => _user.email === user.email);
-        if (existingUser) {
-            throw new common_1.ConflictException('User with that email already exists');
-        }
-        const maxUserId = Math.max(...this.users.map(user => user.userId));
+        const newuser = new user_entity_1.User();
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(user.password, salt);
-        user.password = hashPassword;
-        const newuser = {
-            userId: maxUserId + 1,
-            email: user.email,
-            name: user.name,
-            password: user.password,
-            interests: [],
-            createdAt: new Date(),
-        };
-        console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`);
-        this.users.push(newuser);
-        return newuser;
+        newuser.password = hashPassword;
+        newuser.email = user.email;
+        newuser.name = user.name;
+        newuser.interests = "";
+        newuser.createdAt = new Date();
+        newuser.updatedAt = newuser.createdAt;
+        return this.repository.save(newuser);
     }
     async findOne(email) {
-        return this.users.find(user => user.email === email);
+        return this.repository.findOne({ where: { email: email } });
     }
     async getInterests(email) {
-        const user = this.findOne(email);
-        return (await user).interests;
+        const user = await this.findOne(email);
+        console.log('[UserService] getInterests ', user.interests.split('_'));
+        return user.interests.split('_');
     }
     async validateUser(email, password) {
         console.log(`[UsersService] validateUser, email: ${email}, password: ${password}`);
-        const user = this.users.find(user => user.email === email);
+        const user = await this.findOne(email);
         if (user) {
             console.log('[UsersService] validateUser: found user', user);
             const match = await bcrypt.compare(password, user.password);
@@ -79,24 +57,23 @@ let UsersService = class UsersService {
         const user = await this.findOne(email);
         if (!user)
             return undefined;
-        if (user.interests.includes(interest))
+        if (user.interests.split('_').includes(interest))
             return user;
-        user.interests.push(interest);
-        this.userSave(user);
-        return user;
+        user.interests = user.interests + "_" + interest;
+        return this.repository.save(user);
     }
     async removeInterest(interest, email) {
         const user = await this.findOne(email);
         if (!user)
             return undefined;
-        user.interests = user.interests.filter(userInterest => userInterest !== interest);
-        this.userSave(user);
-        return user;
-    }
-    async userSave(user) {
-        this.users = [...this.users.filter(_user => _user.email !== user.email), user];
+        user.interests = user.interests.split('_').filter(userInterest => userInterest !== interest).join('_');
+        return this.repository.save(user);
     }
 };
+__decorate([
+    (0, typeorm_1.InjectRepository)(user_entity_1.User),
+    __metadata("design:type", typeorm_2.Repository)
+], UsersService.prototype, "repository", void 0);
 UsersService = __decorate([
     (0, common_1.Injectable)()
 ], UsersService);

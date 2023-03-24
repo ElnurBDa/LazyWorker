@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
+import { Repository } from 'typeorm';
+import { Article } from './article.entity';
 import { IArticle } from './articles.interface';
 
 @Injectable()
 export class ArticlesService {
   constructor(private usersService: UsersService) {}
+  
+  @InjectRepository(Article)
+  private readonly repository: Repository<Article>;
 
   private readonly articles: IArticle[] = [
     {
@@ -50,26 +56,29 @@ export class ArticlesService {
     },
   ];
 
-  async findByCategory(category: string): Promise<IArticle[]> {
-    return this.articles.filter(item => item.category === category);
+  async findByCategory(category: string): Promise<Article[]> {
+    const a = await this.repository.find({where : {category:category}});
+    console.log('[ArticleService] findByCategory all', a)
+    return this.repository.find({where : {category:category}});
   }
 
-  async findByCategories(categories: string[]): Promise<IArticle[]> {
+  async findByCategories(categories: string[]): Promise<Article[]> {
     let articles = [];
     for (let index = 0; index < categories.length; index++) {
       const category = categories[index];
       const categoriesByCategory = await this.findByCategory(category);
       articles = [...articles, ...categoriesByCategory];
     }
+    console.log('[ArticleService] findByCategories', articles)
     return articles;
   }
 
-  async findByUserEmail(ownerEmail: string): Promise<IArticle[]> {
+  async findByUserEmail(ownerEmail: string): Promise<Article[]> {
     const interests = await this.usersService.getInterests(ownerEmail);
     return this.findByCategories(interests);
   }
 
-  async findAll(): Promise<IArticle[]> {
-    return this.articles;
+  async findAll(): Promise<Article[]> {
+    return this.repository.find();
   }
 }

@@ -11,55 +11,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticlesService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const users_service_1 = require("../users/users.service");
+const typeorm_2 = require("typeorm");
+const article_entity_1 = require("./article.entity");
 let ArticlesService = class ArticlesService {
     constructor(usersService) {
         this.usersService = usersService;
         this.articles = [
             {
                 postId: 1,
-                title: "Killer",
-                description: "I need a killer for personal needs...",
-                category: "Certified Killer",
-                author: "Elnur",
-                date: new Date("2022-03-25"),
-                website: "upwork",
-                redirectLink: "#",
+                title: 'Killer',
+                description: 'I need a killer for personal needs...',
+                category: 'Certified Killer',
+                author: 'Elnur',
+                date: new Date('2022-03-25'),
+                website: 'upwork',
+                redirectLink: '#',
             },
             {
                 postId: 2,
-                title: "Slave",
-                description: "I need a slave for selling it to mother America!",
-                category: "Certified Slave",
-                author: "Elcan",
-                date: new Date("2022-03-25"),
-                website: "upwork",
-                redirectLink: "#",
+                title: 'Slave',
+                description: 'I need a slave for selling it to mother America!',
+                category: 'Certified Slave',
+                author: 'Elcan',
+                date: new Date('2022-03-25'),
+                website: 'upwork',
+                redirectLink: '#',
             },
             {
                 postId: 3,
-                title: "Tree log",
-                description: "Our 100 billion company needs a tree log for heating home, really really need(((",
-                category: "Certified Tree log",
-                author: "Elcan",
-                date: new Date("2022-03-25"),
-                website: "upwork",
-                redirectLink: "#",
+                title: 'Tree log',
+                description: 'Our 100 billion company needs a tree log for heating home, really really need(((',
+                category: 'Certified Tree log',
+                author: 'Elcan',
+                date: new Date('2022-03-25'),
+                website: 'upwork',
+                redirectLink: '#',
             },
             {
                 postId: 4,
-                title: "Clown",
-                description: "idk, we need you... uwu",
-                category: "Developer",
-                author: "Sasha",
-                date: new Date("2022-03-25"),
-                website: "freelancer",
-                redirectLink: "#",
+                title: 'Clown',
+                description: 'idk, we need you... uwu',
+                category: 'Developer',
+                author: 'Sasha',
+                date: new Date('2022-03-25'),
+                website: 'freelancer',
+                redirectLink: '#',
             },
         ];
     }
     async findByCategory(category) {
-        return this.articles.filter(item => item.category === category);
+        const a = await this.repository.find({ where: { category: category } });
+        console.log('[ArticleService] findByCategory all', a);
+        return this.repository.find({ where: { category: category } });
     }
     async findByCategories(categories) {
         let articles = [];
@@ -68,6 +73,7 @@ let ArticlesService = class ArticlesService {
             const categoriesByCategory = await this.findByCategory(category);
             articles = [...articles, ...categoriesByCategory];
         }
+        console.log('[ArticleService] findByCategories', articles);
         return articles;
     }
     async findByUserEmail(ownerEmail) {
@@ -75,9 +81,13 @@ let ArticlesService = class ArticlesService {
         return this.findByCategories(interests);
     }
     async findAll() {
-        return this.articles;
+        return this.repository.find();
     }
 };
+__decorate([
+    (0, typeorm_1.InjectRepository)(article_entity_1.Article),
+    __metadata("design:type", typeorm_2.Repository)
+], ArticlesService.prototype, "repository", void 0);
 ArticlesService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService])

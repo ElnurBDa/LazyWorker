@@ -11,7 +11,6 @@ const AnArticle = (article: IArticle) => {
               <Card.Subtitle className="home-owner">Author: {article.author}</Card.Subtitle>
               <Card.Text className="home-description">{article.description}</Card.Text>
               <Card.Subtitle>Category: {article.category}</Card.Subtitle>
-              <Card.Subtitle>Published at: {article.date.toString()}</Card.Subtitle>
               <Card.Footer><a href={article.redirectLink}>Redirect: {article.website}</a></Card.Footer>
               <Button variant="primary">Read article</Button>
             </Card.Body>
@@ -19,5 +18,7 @@ const AnArticle = (article: IArticle) => {
         </>
     )
 }
+// <Card.Subtitle>Published at: {article.date.toString()}</Card.Subtitle>
+
 
 export default AnArticle;

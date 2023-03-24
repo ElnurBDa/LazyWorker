@@ -13,7 +13,6 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const jwt_1 = require("@nestjs/jwt");
-const users_interface_1 = require("../users/users.interface");
 let AuthService = class AuthService {
     constructor(usersService, jwtService) {
         this.usersService = usersService;
@@ -21,21 +20,32 @@ let AuthService = class AuthService {
     }
     async validateUser(email, password) {
         console.log(`[AuthService] validateUser: email=${email}, password=${password}`);
-        return await this.usersService.validateUser(email, password);
+        const user = await this.usersService.validateUser(email, password);
+        let interests = user.interests.split('_');
+        interests = interests ? interests : [];
+        return Object.assign({ interests }, user);
     }
     async login(user) {
         console.log(`[AuthService] login: user=${JSON.stringify(user)}`);
-        const payload = { email: user.email, name: user.name, interests: user.interests };
+        const interests = user.interests.split('_');
+        const payload = {
+            email: user.email,
+            name: user.name,
+            interests: interests ? interests : [],
+        };
         return {
             access_token: this.jwtService.sign(payload),
             email: user.email,
             name: user.name,
-            interests: user.interests
+            interests: interests ? interests : [],
         };
     }
-    async register(user) {
-        console.log(`[AuthService] register: user=${JSON.stringify(user)}`);
-        return this.usersService.addUser(user);
+    async register(req) {
+        console.log(`[AuthService] register: user=${JSON.stringify(req)}`);
+        const user = await this.usersService.addUser(req);
+        let interests = user.interests.split('_');
+        interests = interests ? interests : [];
+        return Object.assign({ interests }, user);
     }
 };
 AuthService = __decorate([

@@ -8,14 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const articles_module_1 = require("./articles/articles.module");
 const auth_module_1 = require("./auth/auth.module");
+const typeormanddb_service_1 = require("./typeormanddb/typeormanddb.service");
 const users_module_1 = require("./users/users.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule, users_module_1.UsersModule, articles_module_1.ArticlesModule],
+        imports: [
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
+            articles_module_1.ArticlesModule,
+            typeorm_1.TypeOrmModule.forRootAsync({ useClass: typeormanddb_service_1.TypeOrmConfigService }),
+        ],
         controllers: [],
         providers: [],
     })
