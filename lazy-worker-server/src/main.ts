@@ -4,9 +4,9 @@ import { appConstants } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api')
-  app.enableCors()
+  app.setGlobalPrefix('api');
+  app.enableCors();
   await app.listen(appConstants.port);
-  console.log(`[bootstrap] server is running on port: ${appConstants.port}`)
+  console.log(`[bootstrap] server is running on port: ${appConstants.port}`);
 }
 bootstrap();

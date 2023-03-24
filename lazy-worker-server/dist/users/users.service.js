@@ -18,7 +18,7 @@ let UsersService = class UsersService {
                 name: 'Elnur',
                 password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye',
                 interests: ['Certified Slave', 'backend', 'sufferings'],
-                created_at: new Date('2023-03-08'),
+                createdAt: new Date('2023-03-08'),
             },
             {
                 userId: 2,
@@ -26,7 +26,7 @@ let UsersService = class UsersService {
                 name: 'Elcan',
                 password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2',
                 interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
-                created_at: new Date('2023-03-08'),
+                createdAt: new Date('2023-03-08'),
             },
         ];
     }
@@ -49,7 +49,7 @@ let UsersService = class UsersService {
             name: user.name,
             password: user.password,
             interests: [],
-            created_at: new Date(),
+            createdAt: new Date(),
         };
         console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`);
         this.users.push(newuser);

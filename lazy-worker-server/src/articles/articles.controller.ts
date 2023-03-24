@@ -8,17 +8,16 @@ import { ArticlesService } from './articles.service';
 export class ArticlesController {
   constructor(private articlesService: ArticlesService) {}
 
-  
   @Get('all')
   getAllArticles() {
-    console.log(`[ArticlesController] getAllArticles`)
+    console.log(`[ArticlesController] getAllArticles`);
     return this.articlesService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('user')
   getUserArticles(@Request() req) {
-    console.log(`[ArticlesController] getUserArticles`, req.user)
+    console.log(`[ArticlesController] getUserArticles`, req.user);
     return this.articlesService.findByUserEmail(req.user.email);
   }
 }

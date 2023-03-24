@@ -1,32 +1,35 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { IUser } from './users.interface';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-
   private users: IUser[] = [
     {
       userId: 1,
       email: 'elnur@gmail.com',
       name: 'Elnur',
       password: '$2b$10$tQcpvXg0H5DjQuI9TgLUYOdrrVawNma8PlYMSx0CrGX2XUjaIJWye', // hashed elnur
-      interests: ['Certified Slave','backend','sufferings'],
-      created_at:new Date('2023-03-08'),
+      interests: ['Certified Slave', 'backend', 'sufferings'],
+      createdAt: new Date('2023-03-08'),
     },
     {
       userId: 2,
       email: 'elcan@gmail.com',
       name: 'Elcan',
       password: '$2b$10$3mGanRD0L0DsIURg15.Qtu8fyBLpFO3SHq4e/j8xxbxQsQ53oM1M2', //hashed elcan
-      interests: ['frontend','Certified Killer','sufferings','Developer'],
-      created_at:new Date('2023-03-08'),
+      interests: ['frontend', 'Certified Killer', 'sufferings', 'Developer'],
+      createdAt: new Date('2023-03-08'),
     },
   ];
-  
-  async addUser(user: any): Promise<IUser | undefined>{
-    console.log(`[UsersService] addUser: user=${JSON.stringify(user)}`)
+
+  async addUser(user: any): Promise<IUser | undefined> {
+    console.log(`[UsersService] addUser: user=${JSON.stringify(user)}`);
 
     if (!user.email || !user.name || !user.password) {
       throw new BadRequestException('Missing required fields');
@@ -40,18 +43,17 @@ export class UsersService {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(user.password, salt);
     user.password = hashPassword;
-    
 
     const newuser: IUser = {
-      userId: maxUserId+1,
-      email:user.email,
-      name:user.name,
-      password:user.password,
-      interests:[],
-      created_at: new Date(),
+      userId: maxUserId + 1,
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      interests: [],
+      createdAt: new Date(),
     };
 
-    console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`)
+    console.log(`[UsersService] addUser: newuser=${JSON.stringify(newuser)}`);
     this.users.push(newuser);
 
     return newuser;
@@ -66,22 +68,26 @@ export class UsersService {
     return (await user).interests;
   }
 
-  async validateUser(email: string, password: string): Promise<IUser | undefined> {
-    console.log(`[UsersService] validateUser, email: ${email}, password: ${password}`)
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<IUser | undefined> {
+    console.log(
+      `[UsersService] validateUser, email: ${email}, password: ${password}`,
+    );
 
     const user = this.users.find(user => user.email === email);
 
     if (user) {
-      console.log('[UsersService] validateUser: found user', user)
+      console.log('[UsersService] validateUser: found user', user);
 
       const match = await bcrypt.compare(password, user.password);
-      console.log('[UsersService] validateUser: matched', match)
+      console.log('[UsersService] validateUser: matched', match);
       if (match) {
         return { ...user, password: undefined };
       }
-
     }
-    return undefined
+    return undefined;
   }
 
   async addInterest(
@@ -109,9 +115,10 @@ export class UsersService {
     return user;
   }
 
-  async userSave(user: IUser){
-    this.users = [...this.users.filter(_user => _user.email !== user.email), user]
+  async userSave(user: IUser) {
+    this.users = [
+      ...this.users.filter(_user => _user.email !== user.email),
+      user,
+    ];
   }
-
-
 }

@@ -4,5 +4,5 @@ export interface IUser {
     password: string;
     name: string;
     interests: string[];
-    created_at: Date;
+    createdAt: Date;
 }
