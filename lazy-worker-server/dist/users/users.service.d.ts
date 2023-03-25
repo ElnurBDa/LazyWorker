@@ -2,7 +2,7 @@ import { User } from './user.entity';
 export declare class UsersService {
     private readonly repository;
     addUser(user: any): Promise<User>;
-    findOne(email: string): Promise<User | undefined>;
+    findOneByUserEmail(email: string): Promise<User | undefined>;
     getInterests(email: string): Promise<string[] | undefined>;
     validateUser(email: string, password: string): Promise<User | undefined>;
     addInterest(interest: string, email: string): Promise<User | undefined>;

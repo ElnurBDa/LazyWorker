@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
-import { Controller, Get, Req, Request, Post, UseGuards } from '@nestjs/common';
-import { Body } from '@nestjs/common/decorators';
+import {
+  Controller,
+  Get,
+  Req,
+  Request,
+  Post,
+  UseGuards,
+  Body,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -34,6 +40,6 @@ export class UsersController {
   @Post('getUser')
   getUser(@Request() req) {
     console.log(`[UsersController] getUser`, req.body);
-    return this.usersService.findOne(req.body.email);
+    return this.usersService.findOneByUserEmail(req.body.email);
   }
 }

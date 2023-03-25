@@ -13,20 +13,20 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    console.log(`[AuthController] login`);
+    console.log(`[AuthController] login`, req);
     return this.authService.login(req.user);
   }
 
   @Post('register')
   async register(@Body() req) {
-    console.log(`[AuthController] register`);
+    console.log(`[AuthController] register`, req);
     return this.authService.register(req);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
+  @Get('profile') // this method is not that important, it is just for ensuring that jwt works)
   getProfile(@Request() req) {
-    console.log(`[AuthController] getProfile`);
+    console.log(`[AuthController] getProfile`, req);
     return req.user;
   }
 }

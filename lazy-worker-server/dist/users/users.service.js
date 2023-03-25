@@ -17,7 +17,6 @@ const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./user.entity");
 let UsersService = class UsersService {
     async addUser(user) {
-        console.log(`[UsersService] addUser: user=${JSON.stringify(user)}`);
         if (!user.email || !user.name || !user.password) {
             throw new common_1.BadRequestException('Missing required fields');
         }
@@ -27,22 +26,24 @@ let UsersService = class UsersService {
         newuser.password = hashPassword;
         newuser.email = user.email;
         newuser.name = user.name;
-        newuser.interests = "";
+        newuser.interests = '';
         newuser.createdAt = new Date();
         newuser.updatedAt = newuser.createdAt;
+        console.log(`[UsersService] addUser`, newuser);
         return this.repository.save(newuser);
     }
-    async findOne(email) {
-        return this.repository.findOne({ where: { email: email } });
+    async findOneByUserEmail(email) {
+        const user = this.repository.findOne({ where: { email: email } });
+        console.log(`[UsersService] findOneByUserEmail`, user);
+        return user;
     }
     async getInterests(email) {
-        const user = await this.findOne(email);
-        console.log('[UserService] getInterests ', user.interests.split('_'));
+        const user = await this.findOneByUserEmail(email);
+        console.log('[UsersService] getInterests', user);
         return user.interests.split('_');
     }
     async validateUser(email, password) {
-        console.log(`[UsersService] validateUser, email: ${email}, password: ${password}`);
-        const user = await this.findOne(email);
+        const user = await this.findOneByUserEmail(email);
         if (user) {
             console.log('[UsersService] validateUser: found user', user);
             const match = await bcrypt.compare(password, user.password);
@@ -54,19 +55,24 @@ let UsersService = class UsersService {
         return undefined;
     }
     async addInterest(interest, email) {
-        const user = await this.findOne(email);
+        const user = await this.findOneByUserEmail(email);
         if (!user)
             return undefined;
         if (user.interests.split('_').includes(interest))
             return user;
-        user.interests = user.interests + "_" + interest;
+        user.interests = user.interests + '_' + interest;
+        console.log('[UsersService] addInterest', user);
         return this.repository.save(user);
     }
     async removeInterest(interest, email) {
-        const user = await this.findOne(email);
+        const user = await this.findOneByUserEmail(email);
         if (!user)
             return undefined;
-        user.interests = user.interests.split('_').filter(userInterest => userInterest !== interest).join('_');
+        user.interests = user.interests
+            .split('_')
+            .filter(userInterest => userInterest !== interest)
+            .join('_');
+        console.log('[UsersService] removeInterest', user);
         return this.repository.save(user);
     }
 };

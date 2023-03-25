@@ -34,7 +34,7 @@ let UsersController = class UsersController {
     }
     getUser(req) {
         console.log(`[UsersController] getUser`, req.body);
-        return this.usersService.findOne(req.body.email);
+        return this.usersService.findOneByUserEmail(req.body.email);
     }
 };
 __decorate([
