@@ -15,7 +15,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: appConstants.DATABASE_USER,
       password: appConstants.DATABASE_PASSWORD,
       entities: [User, Article],
-      migrations: ['dist/migrations/*.{ts,js}'],
+      migrations: ['dist/migrations/*.{ts,js}'], // better changing to smth like [A, B]
       migrationsTableName: 'typeorm_migrations',
       logger: 'file',
       synchronize: true, // never use TRUE in production!
