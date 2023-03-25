@@ -3,6 +3,7 @@ import { selectAuthenticatedUser} from '../../redux/slices/auth.slice'
 import { useAppSelector } from '../../redux/hooks'
 import { useEffect, useState } from 'react'
 import { useAddInterestMutation, useRemoveInterestMutation } from '../../services/interests.service'
+import { Button, Card } from 'react-bootstrap'
 
 const ProfilePage = () => {
   const [addInterest, { data, error, isLoading }] = useAddInterestMutation();
@@ -52,20 +53,24 @@ const ProfilePage = () => {
   }
 
   return (
-    <div style={{'marginLeft':'10%'}}>
-      <h1>My interests</h1>
-      <div className="about-wrapper">
-        {user.interests.map((interest, index) => {
-          if (interest==="") return;
-          return (
-            <div key={index} className="interest" onClick={handleRemove}>{interest}</div>)
-            })}
-      </div>
-      <span> 
-        <input value={newInterest} style={{'margin':'1rem'}} onChange={handleChange}></input>
-        <button onClick={handleAddInterest}>ADD</button>
-      </span>
-    </div>
+    <>
+      <h1 style={{textAlign: 'center' }}>Profile</h1>
+      <Card style={{'marginLeft':'10%', width: '80%'}}>
+        <Card.Title>My interests</Card.Title>
+        <Card.Text>Add your interests below and click on them to remove them.</Card.Text>
+        <div className="interest-wrapper">
+          {user.interests.map((interest, index) => {
+            if (interest==="") return;
+            return (
+              <div key={index} className="interest" onClick={handleRemove}>{interest}</div>)
+              })}
+        </div>
+        <span> 
+          <input value={newInterest} style={{'margin':'20px 10px 0 0'}} onChange={handleChange}></input>
+          <Button variant="primary" onClick={handleAddInterest}>ADD</Button>
+        </span>
+      </Card>
+    </>
   )
 }
 export default ProfilePage

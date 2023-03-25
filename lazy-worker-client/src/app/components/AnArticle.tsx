@@ -5,9 +5,9 @@ import './anArticle.css'
 
 const AnArticle = (article: IArticle) => {
     return (
-        <>
-          <Card style={{ width: '54rem', left: '18rem' }}>
-            <Card.Body>
+        <div style={{ width: '400px'}}>
+          <Card>
+            <Card.Body style={{ height: '400px'}}>
               <Card.Title>{article.title}</Card.Title>
               {article.author!==' '?<Card.Subtitle className="home-owner">Author: {article.author}</Card.Subtitle>:<></>}   
               <Card.Text className="home-description">{article.description}</Card.Text>
@@ -15,7 +15,7 @@ const AnArticle = (article: IArticle) => {
               <Button variant="primary" onClick={() => window.open(article.redirectLink)}>{article.website}</Button>
             </Card.Body>
           </Card>
-        </>
+        </div>
     )
 }
 // <Card.Subtitle>Published at: {article.date.toString()}</Card.Subtitle>

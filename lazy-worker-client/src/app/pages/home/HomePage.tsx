@@ -32,7 +32,7 @@ const HomePage = () => {
       <div className="home-wrapper">
         {articles.map((article, index) => {
           return (
-            <div key={index}>
+            <div key={index} >
               <AnArticle {...article}></AnArticle>
             </div>
           )
