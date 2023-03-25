@@ -6,7 +6,7 @@ import './anArticle.css'
 const AnArticle = (article: IArticle) => {
     return (
         <>
-          <Card style={{ width: '70%', left: '15%' }}>
+          <Card style={{ width: '54rem', left: '18rem' }}>
             <Card.Body>
               <Card.Title>{article.title}</Card.Title>
               {article.author!==' '?<Card.Subtitle className="home-owner">Author: {article.author}</Card.Subtitle>:<></>}   
