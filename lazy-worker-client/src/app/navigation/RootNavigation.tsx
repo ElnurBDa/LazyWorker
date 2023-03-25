@@ -3,7 +3,7 @@ import LoginPage from '../pages/login/LoginPage'
 import RegisterPage from '../pages/register/RegisterPage'
 import HomePage from '../pages/home/HomePage'
 import MyArticlesPage from '../pages/myArticles/MyArticlesPage'
-import AboutPage from '../pages/about/AboutPage'
+import ProfilePage from '../pages/profile/ProfilePage'
 import { useAppSelector } from '../redux/hooks'
 import { selectAuthenticatedUser } from '../redux/slices/auth.slice'
 
@@ -26,7 +26,7 @@ const RootNavigation = () => {
         <Route path="/my" element={<PrivateRoute />}>
           <Route path="/my" element={<MyArticlesPage />} />
         </Route>
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   )

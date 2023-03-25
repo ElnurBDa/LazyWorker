@@ -41,7 +41,7 @@ function App() {
           <Loader show={general.showLoader} />
           <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
-              <Navbar.Brand href="#home">LazyWorker</Navbar.Brand>
+              <Navbar.Brand href="/home">LazyWorker</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
@@ -51,7 +51,7 @@ function App() {
                 <Nav className="ms-auto">
                   {access_token ? (
                     <NavDropdown title={name} id="basic-nav-dropdown">
-                      <NavDropdown.Item href="/about">My interests</NavDropdown.Item>
+                      <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                       <NavDropdown.Item onClick={logout} href="/">Logout</NavDropdown.Item>
                     </NavDropdown>
                   ) : (

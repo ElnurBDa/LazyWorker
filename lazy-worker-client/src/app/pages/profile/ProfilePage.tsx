@@ -1,10 +1,10 @@
-import './aboutPage.css'
+import './profilePage.css'
 import { selectAuthenticatedUser} from '../../redux/slices/auth.slice'
 import { useAppSelector } from '../../redux/hooks'
 import { useEffect, useState } from 'react'
 import { useAddInterestMutation, useRemoveInterestMutation } from '../../services/interests.service'
 
-const AboutPage = () => {
+const ProfilePage = () => {
   const [addInterest, { data, error, isLoading }] = useAddInterestMutation();
   const [removeInterest, dei] = useRemoveInterestMutation();
   const [newInterest,setNewInterest] = useState('my new interest');
@@ -68,4 +68,4 @@ const AboutPage = () => {
     </div>
   )
 }
-export default AboutPage
+export default ProfilePage
