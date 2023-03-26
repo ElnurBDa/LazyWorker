@@ -7,8 +7,8 @@ const AnArticle = (article: IArticle) => {
     return (
         <div style={{ width: '400px'}}>
           <Card>
-            <Card.Body style={{ height: '400px'}}>
-              <Card.Title>{article.title}</Card.Title>
+            <Card.Body style={{ height: '380px'}}>
+              <Card.Title style={{ height: '50px'}}>{article.title}</Card.Title>
               {article.author!==' '?<Card.Subtitle className="home-owner">Author: {article.author}</Card.Subtitle>:<></>}   
               <Card.Text className="home-description">{article.description}</Card.Text>
               <Card.Subtitle className="category">Category: {article.category}</Card.Subtitle>

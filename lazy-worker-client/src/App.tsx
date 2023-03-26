@@ -42,11 +42,11 @@ function App() {
           <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
               <Navbar.Brand href="/home">LazyWorker</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Toggle aria-controls="basic-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <Nav.Link href="/home">Home</Nav.Link>
-                  {access_token ? <Nav.Link href="/my">Posts related to me</Nav.Link> : <Outlet />}
+                  {access_token ? <Nav.Link href="/my">For me</Nav.Link> : <Outlet />}
                 </Nav>
                 <Nav className="ms-auto">
                   {access_token ? (

@@ -29,7 +29,7 @@ const RegisterPage = () => {
       NotificationManager.success(`Welcome ${data.name}, now login please`, 'Registration Success')
       navigate('/login')
     } else if (error) {
-      NotificationManager.error('Error registrating user, please check smth over there', 'Registration Error')
+      NotificationManager.error('Error registrating user, please check email, name or password.', 'Registration Error')
       console.log(`RegisterPage:: Authentication error`, error)
     }
   }, [data, error])
