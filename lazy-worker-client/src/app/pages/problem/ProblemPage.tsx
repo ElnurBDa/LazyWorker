@@ -9,7 +9,11 @@ const ProblemPage = () => {
       <h1 style={{textAlign: 'center' }}>Problem?</h1>
       <Card style={{'marginLeft':'10%', width: '80%'}}>
         <Card.Text>We are so sorry that you experiencing some problems with our website. Development of our project is undergoing, new features will be implemented soon!</Card.Text>
-        <img src="sorry.jpg" alt="sorry" style={{maxHeight:'400px', maxWidth:'400px', margin:'auto'}}/>
+        <img src="sorry.jpg" alt="sorry" style={{
+          maxHeight:'400px', 
+          maxWidth:'400px', 
+          margin:'auto', 
+          marginBottom:'15px'}}/>
       </Card>
     </>
   )
