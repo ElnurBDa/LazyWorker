@@ -13,9 +13,9 @@ import { Card } from 'react-bootstrap'
 import { useRegisterMutation } from '../../services/auth.service'
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
-  name: yup.string().required(),
-  password: yup.string().required(),
+  email: yup.string().email().min(5, 'Too Short!').max(50, 'Too Long!').required("Email is required"),
+  name: yup.string().min(3, 'Too Short!').max(50, 'Too Long!').required(),
+  password: yup.string().min(5, 'Too Short!').max(50, 'Too Long!').required(),
   terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
 })
 

@@ -16,8 +16,8 @@ import { useLoginMutation } from '../../services/auth.service'
 import { setShowLoader } from '../../redux/slices/general.slice'
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup.string().required()
+  email: yup.string().email().required("Email is required"),
+  password: yup.string().min(5, 'Too Short!').max(50, 'Too Long!').required("Password is required")
 })
 
 const LoginPage = () => {
@@ -77,7 +77,7 @@ const LoginPage = () => {
                   <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
-              <Form.Group as={Col} md="12" controlId="validationFormik02">
+              <Form.Group as={Col} md="12" controlId="validationFormikPassword">
                 <Form.Label>Password</Form.Label>
                 <InputGroup hasValidation>
                   <InputGroup.Text id="inputGroupPrepend">&#128273;</InputGroup.Text>
@@ -94,6 +94,7 @@ const LoginPage = () => {
               </Form.Group>
               <Button type="submit">Submit form</Button>
             </Form>
+            <a href="/problem" style={{color:'black', paddingTop:'3px'}}>Forgot password...</a>
           </Card>
         )}
       </Formik>

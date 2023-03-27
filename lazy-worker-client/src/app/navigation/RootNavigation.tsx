@@ -7,6 +7,7 @@ import ProfilePage from '../pages/profile/ProfilePage'
 import { useAppSelector } from '../redux/hooks'
 import { selectAuthenticatedUser } from '../redux/slices/auth.slice'
 import AboutPage from '../pages/about/AboutPage'
+import ProblemPage from '../pages/problem/ProblemPage'
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
@@ -25,6 +26,7 @@ const RootNavigation = () => {
         <Route path="/" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/problem" element={<ProblemPage />} />
         <Route path="/my" element={<PrivateRoute />}>
           <Route path="/my" element={<MyArticlesPage />} />
         </Route>
