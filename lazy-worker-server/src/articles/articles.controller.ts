@@ -9,14 +9,14 @@ export class ArticlesController {
 
   @Get('all')
   getAllArticles() {
-    console.log(`[ArticlesController] getAllArticles`);
+    //console.log(`[ArticlesController] getAllArticles`);
     return this.articlesService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('user')
   getUserArticles(@Request() req) {
-    console.log(`[ArticlesController] getUserArticles`, req.user);
+    //console.log(`[ArticlesController] getUserArticles`, req.user);
     return this.articlesService.findByUserEmail(req.user.email);
   }
 }

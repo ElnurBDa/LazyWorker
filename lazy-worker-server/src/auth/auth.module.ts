@@ -6,14 +6,15 @@ import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
-import * as dotenv from 'dotenv';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.jwtSecret,
+      secret: process.env.JWT_SECRET
       //      signOptions: { expiresIn: '30m' },
     }),
   ],

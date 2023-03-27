@@ -20,7 +20,6 @@ let ArticlesService = class ArticlesService {
         this.usersService = usersService;
     }
     async findByCategory(category) {
-        console.log(`[ArticlesService] findByCategory`, category);
         return this.repository.find({ where: { category: category } });
     }
     async findByCategories(categories) {
@@ -30,16 +29,13 @@ let ArticlesService = class ArticlesService {
             const categoriesByCategory = await this.findByCategory(category);
             articles = [...articles, ...categoriesByCategory];
         }
-        console.log(`[ArticlesService] findByCategories`, articles);
         return articles;
     }
     async findByUserEmail(ownerEmail) {
         const interests = await this.usersService.getInterests(ownerEmail);
-        console.log(`[ArticlesService] findByUserEmail`, interests);
         return this.findByCategories(interests);
     }
     async findAll() {
-        console.log(`[ArticlesService] findAll`);
         return this.repository.find();
     }
 };

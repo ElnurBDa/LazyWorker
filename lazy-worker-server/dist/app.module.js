@@ -13,11 +13,13 @@ const articles_module_1 = require("./articles/articles.module");
 const auth_module_1 = require("./auth/auth.module");
 const typeormanddb_service_1 = require("./typeormanddb/typeormanddb.service");
 const users_module_1 = require("./users/users.module");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot(),
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
             articles_module_1.ArticlesModule,

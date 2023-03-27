@@ -21,11 +21,9 @@ let ArticlesController = class ArticlesController {
         this.articlesService = articlesService;
     }
     getAllArticles() {
-        console.log(`[ArticlesController] getAllArticles`);
         return this.articlesService.findAll();
     }
     getUserArticles(req) {
-        console.log(`[ArticlesController] getUserArticles`, req.user);
         return this.articlesService.findByUserEmail(req.user.email);
     }
 };
