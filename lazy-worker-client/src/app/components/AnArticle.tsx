@@ -7,6 +7,13 @@ const AnArticle = (article: IArticle) => {
     return (
         <div style={{ width: '400px'}}>
           <Card>
+            <a href="/problem" style={{
+              color:'black', 
+              fontSize:'10px',
+              textDecoration: 'none',
+              position:'absolute',
+              right:'10px',
+              top:'10px'}}>Complain🚩</a>
             <Card.Body style={{ height: '380px'}}>
               <Card.Title style={{ height: '50px'}}>{article.title}</Card.Title>
               {article.author!==' '?<Card.Subtitle className="home-owner">Author: {article.author}</Card.Subtitle>:<></>}   

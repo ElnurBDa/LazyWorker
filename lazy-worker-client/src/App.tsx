@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { resetState, selectAuthenticatedUser, setAuthenticatedUser } from './app/redux/slices/auth.slice'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom'
+import Footer from './app/components/Footer'
 
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
           <Loader show={general.showLoader} />
           <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
-              <Navbar.Brand href="/home"><img src="/logo192.png" alt="Logo" width="30" height="30" /> LazyWorker</Navbar.Brand>
+              <Navbar.Brand href="/home"><img src="/logocute192.png" alt="Logo" width="35" height="35" /> LazyWorker</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
@@ -69,6 +70,7 @@ function App() {
       ) : (
         <></>
       )}
+      <Footer/>
     </div>
   )
 }
