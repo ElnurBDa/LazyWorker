@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Article } from 'src/articles/article.entity';
-import { appConstants } from 'src/constants';
 import { User } from 'src/users/user.entity';
 
 @Injectable()
@@ -9,11 +8,11 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   public createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: appConstants.DATABASE_HOST,
-      port: appConstants.DATABASE_PORT,
-      database: appConstants.DATABASE_NAME,
-      username: appConstants.DATABASE_USER,
-      password: appConstants.DATABASE_PASSWORD,
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
       entities: [User, Article],
       migrations: ['dist/migrations/*.{ts,js}'], // better changing to smth like [A, B]
       migrationsTableName: 'typeorm_migrations',

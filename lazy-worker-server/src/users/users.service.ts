@@ -32,7 +32,7 @@ export class UsersService {
   }
 
   async findOneByUserEmail(email: string): Promise<User | undefined> {
-    const user = this.repository.findOne({ where: { email: email } });
+    const user = await this.repository.findOne({ where: { email: email } });
     console.log(`[UsersService] findOneByUserEmail`, user);
     return user;
   }

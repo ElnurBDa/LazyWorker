@@ -33,7 +33,7 @@ let UsersService = class UsersService {
         return this.repository.save(newuser);
     }
     async findOneByUserEmail(email) {
-        const user = this.repository.findOne({ where: { email: email } });
+        const user = await this.repository.findOne({ where: { email: email } });
         console.log(`[UsersService] findOneByUserEmail`, user);
         return user;
     }

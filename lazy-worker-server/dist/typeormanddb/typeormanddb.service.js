@@ -9,17 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeOrmConfigService = void 0;
 const common_1 = require("@nestjs/common");
 const article_entity_1 = require("../articles/article.entity");
-const constants_1 = require("../constants");
 const user_entity_1 = require("../users/user.entity");
 let TypeOrmConfigService = class TypeOrmConfigService {
     createTypeOrmOptions() {
         return {
             type: 'postgres',
-            host: constants_1.appConstants.DATABASE_HOST,
-            port: constants_1.appConstants.DATABASE_PORT,
-            database: constants_1.appConstants.DATABASE_NAME,
-            username: constants_1.appConstants.DATABASE_USER,
-            password: constants_1.appConstants.DATABASE_PASSWORD,
+            host: process.env.DATABASE_HOST,
+            port: parseInt(process.env.DATABASE_PORT),
+            database: process.env.DATABASE_NAME,
+            username: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
             entities: [user_entity_1.User, article_entity_1.Article],
             migrations: ['dist/migrations/*.{ts,js}'],
             migrationsTableName: 'typeorm_migrations',

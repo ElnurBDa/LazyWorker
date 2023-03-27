@@ -9,7 +9,7 @@ import { selectGeneral } from './app/redux/slices/general.slice'
 import { useEffect, useState } from 'react'
 import { resetState, selectAuthenticatedUser, setAuthenticatedUser } from './app/redux/slices/auth.slice'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
-import { Outlet, redirect } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 
 function App() {
@@ -27,8 +27,7 @@ function App() {
     }
     setFinsihedInitialize(true)
   }, [dispatch])
-
-
+  
   const logout = () => {
     dispatch(resetState())
   }
@@ -41,18 +40,19 @@ function App() {
           <Loader show={general.showLoader} />
           <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
-              <Navbar.Brand href="/home">LazyWorker</Navbar.Brand>
+              <Navbar.Brand href="/home"><img src="/logo192.png" alt="Logo" width="30" height="30" /> LazyWorker</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <Nav.Link href="/home">Home</Nav.Link>
                   {access_token ? <Nav.Link href="/my">For me</Nav.Link> : <Outlet />}
+                  <Nav.Link href="/about">About</Nav.Link>
                 </Nav>
                 <Nav className="ms-auto">
                   {access_token ? (
                     <NavDropdown title={name} id="basic-nav-dropdown">
                       <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                      <NavDropdown.Item onClick={logout} href="/">Logout</NavDropdown.Item>
+                      <NavDropdown.Item onClick={logout} href="/login">Logout</NavDropdown.Item>
                     </NavDropdown>
                   ) : (
                     <NavDropdown title={'NotLogged'} id="basic-nav-dropdown">

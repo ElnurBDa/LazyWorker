@@ -17,8 +17,7 @@ import { setShowLoader } from '../../redux/slices/general.slice'
 
 const schema = yup.object().shape({
   email: yup.string().required(),
-  password: yup.string().required(),
-  terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
+  password: yup.string().required()
 })
 
 const LoginPage = () => {
@@ -55,8 +54,7 @@ const LoginPage = () => {
         onSubmit={handleLogin}
         initialValues={{
           email: '',
-          password: '',
-          terms: false,
+          password: ''
         }}
       >
         {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
@@ -93,18 +91,6 @@ const LoginPage = () => {
                   />
                 </InputGroup>
                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group>
-                <Form.Check
-                  required
-                  name="terms"
-                  label="Agree to terms and conditions"
-                  onChange={handleChange}
-                  isInvalid={!!errors.terms}
-                  feedback={errors.terms}
-                  feedbackType="invalid"
-                  id="validationFormik0"
-                />
               </Form.Group>
               <Button type="submit">Submit form</Button>
             </Form>
