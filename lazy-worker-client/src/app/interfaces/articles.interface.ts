@@ -1,5 +1,5 @@
 export interface IArticle {
-  id: number
+  postId: number
   title: string
   description: string
   category: string
@@ -7,4 +7,5 @@ export interface IArticle {
   date: Date
   website: string
   redirectLink: string
+  score: number
 }
