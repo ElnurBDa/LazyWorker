@@ -10,6 +10,7 @@ exports.TypeOrmConfigService = void 0;
 const common_1 = require("@nestjs/common");
 const article_entity_1 = require("../articles/article.entity");
 const user_entity_1 = require("../users/user.entity");
+const like_entity_1 = require("../like/like.entity");
 let TypeOrmConfigService = class TypeOrmConfigService {
     createTypeOrmOptions() {
         return {
@@ -19,7 +20,7 @@ let TypeOrmConfigService = class TypeOrmConfigService {
             database: process.env.DATABASE_NAME,
             username: process.env.DATABASE_USER,
             password: process.env.DATABASE_PASSWORD,
-            entities: [user_entity_1.User, article_entity_1.Article],
+            entities: [user_entity_1.User, article_entity_1.Article, like_entity_1.Like],
             migrations: ['dist/migrations/*.{ts,js}'],
             migrationsTableName: 'typeorm_migrations',
             logger: 'file',

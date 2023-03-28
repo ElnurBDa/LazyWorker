@@ -42,6 +42,10 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "description", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Article.prototype, "score", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)
 ], Article.prototype, "createdAt", void 0);

@@ -29,6 +29,9 @@ export class Article {
   @Column({ type: 'text' })
   public description: string;
 
+  @Column({ default: 0 })
+  public score: number;
+
   /*
    * Create and Update Date Columns
    */

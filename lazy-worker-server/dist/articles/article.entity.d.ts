@@ -6,6 +6,7 @@ export declare class Article {
     redirectLink: string;
     category: string;
     description: string;
+    score: number;
     createdAt: Date;
     updatedAt: Date;
 }
