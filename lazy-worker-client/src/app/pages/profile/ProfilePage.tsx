@@ -55,6 +55,30 @@ const ProfilePage = () => {
   return (
     <>
       <h1 style={{textAlign: 'center' }}>Profile</h1>
+      <Card style={{'marginLeft':'10%', width: '80%', marginBottom:'20px'}}>
+        <Card.Title>Edit</Card.Title>
+        <section>
+        <img src="defaultProfile.jpg" alt="default" style={{
+          float:'left',
+          marginRight:'20px',
+          maxHeight: '200px',
+          maxWidth: '200px',
+          border: '2px solid black', 
+        }}/>
+        <div style={{paddingTop:'20px'}}>
+        <span> 
+          <h6>Name</h6>
+          <input value={""} style={{'margin':'0 10px 0 0'}} onChange={()=>{return;}}></input>
+          <Button variant="primary" onClick={()=>{window.open("/problem")}}>CHANGE</Button>
+        </span>
+        <span> 
+          <h6>Email</h6>
+          <input value={""} style={{'margin':'0 10px 0 0'}} onChange={()=>{return;}}></input>
+          <Button variant="primary" onClick={()=>{window.open("/problem")}}>CHANGE</Button>
+        </span>
+        </div>
+        </section>
+      </Card>
       <Card style={{'marginLeft':'10%', width: '80%'}}>
         <Card.Title>My interests</Card.Title>
         <Card.Text>Add your interests below and click on them to remove them.</Card.Text>
