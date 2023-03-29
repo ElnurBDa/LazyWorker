@@ -23,6 +23,9 @@ export class ArticlesService {
       const categoriesByCategory = await this.findByCategory(category);
       articles = [...articles, ...categoriesByCategory];
     }
+
+    // const tempArticle = categories.map(async (category) => await this.findByCategories(categories))
+
     // console.log(`[ArticlesService] findByCategories`, articles);
     return articles;
   }
