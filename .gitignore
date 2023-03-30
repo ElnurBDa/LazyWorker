@@ -1,2 +1,4 @@
 lazy-worker-client/node_modules
 lazy-worker-server/node_modules
+lazy-worker-server/dist
+lazy-worker-server/.env

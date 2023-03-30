@@ -1,8 +1,0 @@
-export interface IUser {
-    userId: number;
-    email: string;
-    password: string;
-    name: string;
-    interests: string[];
-    createdAt: Date;
-}
