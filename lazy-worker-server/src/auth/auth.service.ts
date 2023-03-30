@@ -15,7 +15,7 @@ export class AuthService {
     const user = await this.usersService.validateUser(email, password);
     let interests = user.interests.split('_');
     interests = interests ? interests : [];
-    console.log(`[AuthService] validateUser`, user);
+    // console.log(`[AuthService] validateUser`, user);
     return { interests, ...user };
   }
 
@@ -26,7 +26,7 @@ export class AuthService {
       name: user.name,
       interests: interests ? interests : [],
     };
-    console.log(`[AuthService] login`, payload);
+    // console.log(`[AuthService] login`, payload);
     return {
       userId: user.userId,
       access_token: this.jwtService.sign(payload),
@@ -40,7 +40,7 @@ export class AuthService {
     const user = await this.usersService.addUser(req);
     let interests = user.interests.split('_');
     interests = interests ? interests : [];
-    console.log(`[AuthService] register`, user);
+    // console.log(`[AuthService] register`, user);
     return { interests, ...user };
   }
 }

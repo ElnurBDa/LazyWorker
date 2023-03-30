@@ -20,7 +20,6 @@ let LikeController = class LikeController {
         this.likeService = likeService;
     }
     likeArticle(req) {
-        console.log('[LikeController] likeArticle', req.body);
         this.likeService.likeArticle(req.body);
     }
 };

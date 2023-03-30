@@ -8,7 +8,7 @@ export class LikeController {
 
   @Post()
   likeArticle(@Request() req) {
-    console.log('[LikeController] likeArticle',req.body);
+    // console.log('[LikeController] likeArticle',req.body);
     this.likeService.likeArticle(req.body);
   }
 }

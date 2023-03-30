@@ -27,19 +27,19 @@ export class UsersService {
     newuser.createdAt = new Date();
     newuser.updatedAt = newuser.createdAt;
 
-    console.log(`[UsersService] addUser`, newuser);
+    // console.log(`[UsersService] addUser`, newuser);
     return this.repository.save(newuser);
   }
 
   async findOneByUserEmail(email: string): Promise<User | undefined> {
     const user = await this.repository.findOne({ where: { email: email } });
-    console.log(`[UsersService] findOneByUserEmail`, user);
+    // console.log(`[UsersService] findOneByUserEmail`, user);
     return user;
   }
 
   async getInterests(email: string): Promise<string[] | undefined> {
     const user = await this.findOneByUserEmail(email);
-    console.log('[UsersService] getInterests', user);
+    // console.log('[UsersService] getInterests', user);
     return user.interests.split('_');
   }
 
@@ -50,10 +50,10 @@ export class UsersService {
     const user = await this.findOneByUserEmail(email);
 
     if (user) {
-      console.log('[UsersService] validateUser: found user', user);
+      // console.log('[UsersService] validateUser: found user', user);
 
       const match = await bcrypt.compare(password, user.password);
-      console.log('[UsersService] validateUser: matched', match);
+      // console.log('[UsersService] validateUser: matched', match);
       if (match) {
         return { ...user, password: undefined };
       }
@@ -69,7 +69,7 @@ export class UsersService {
     if (!user) return undefined;
     if (user.interests.split('_').includes(interest)) return user;
     user.interests = user.interests + '_' + interest;
-    console.log('[UsersService] addInterest', user);
+    // console.log('[UsersService] addInterest', user);
     return this.repository.save(user);
   }
 
@@ -84,7 +84,7 @@ export class UsersService {
       .filter(userInterest => userInterest !== interest)
       .join('_');
 
-    console.log('[UsersService] removeInterest', user);
+    // console.log('[UsersService] removeInterest', user);
     return this.repository.save(user);
   }
 }

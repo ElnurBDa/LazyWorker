@@ -21,19 +21,15 @@ let UsersController = class UsersController {
         this.usersService = usersService;
     }
     addInterest(req) {
-        console.log(`[UsersController] addInterest`, req.body);
         return this.usersService.addInterest(req.body.interest, req.body.email);
     }
     removeInterest(req) {
-        console.log(`[UsersController] removeInterest`, req.body);
         return this.usersService.removeInterest(req.body.interest, req.body.email);
     }
     getInterests(req) {
-        console.log(`[UsersController] getInterests`, req.body);
         return this.usersService.getInterests(req.body.email);
     }
     getUser(req) {
-        console.log(`[UsersController] getUser`, req.body);
         return this.usersService.findOneByUserEmail(req.body.email);
     }
 };

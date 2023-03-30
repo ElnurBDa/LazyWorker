@@ -11,7 +11,7 @@ const AboutPage = () => {
       <Card style={{'marginLeft':'10%', width: '80%'}}>
         <img src="/logo1024.jpg" alt="logo" style={{maxHeight:'380px', maxWidth:'380px', margin:'auto'}}/>
         <Card.Text>The freelance economy is growing, and with it, the number of job opportunities available on multiple freelance websites. Our purpose is trying to integrate these opportunities into a single platform which is called LazyWorker. </Card.Text>
-        <Card.Text>Founders: Elnur Badalov, <b className="rainbow-text">Eljan Karimli</b>, Oleksandr Kryvych.</Card.Text>
+        <Card.Text>Founders: <b>Elnur Badalov, Eljan Karimli, Oleksandr Kryvych.</b></Card.Text>
       </Card>
     </>
   )

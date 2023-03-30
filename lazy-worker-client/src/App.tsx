@@ -50,6 +50,12 @@ function App() {
                   <Nav.Link href="/about">About</Nav.Link>
                 </Nav>
                 <Nav className="ms-auto">
+                  <Nav.Link href="/problem"><i className="fa fa-bell" style={{
+                    color:'white', 
+                    fontSize:'20px',
+                    marginRight:'10px',
+                    textDecoration: 'none'}}></i>
+                  </Nav.Link>
                   {access_token ? (
                     <NavDropdown title={name} id="basic-nav-dropdown">
                       <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

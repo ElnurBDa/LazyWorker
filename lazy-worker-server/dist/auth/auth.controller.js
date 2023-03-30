@@ -23,15 +23,12 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     async login(req) {
-        console.log(`[AuthController] login`, req);
         return this.authService.login(req.user);
     }
     async register(req) {
-        console.log(`[AuthController] register`, req);
         return this.authService.register(req);
     }
     getProfile(req) {
-        console.log(`[AuthController] getProfile`, req);
         return req.user;
     }
 };

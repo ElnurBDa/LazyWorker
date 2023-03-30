@@ -29,25 +29,20 @@ let UsersService = class UsersService {
         newuser.interests = '';
         newuser.createdAt = new Date();
         newuser.updatedAt = newuser.createdAt;
-        console.log(`[UsersService] addUser`, newuser);
         return this.repository.save(newuser);
     }
     async findOneByUserEmail(email) {
         const user = await this.repository.findOne({ where: { email: email } });
-        console.log(`[UsersService] findOneByUserEmail`, user);
         return user;
     }
     async getInterests(email) {
         const user = await this.findOneByUserEmail(email);
-        console.log('[UsersService] getInterests', user);
         return user.interests.split('_');
     }
     async validateUser(email, password) {
         const user = await this.findOneByUserEmail(email);
         if (user) {
-            console.log('[UsersService] validateUser: found user', user);
             const match = await bcrypt.compare(password, user.password);
-            console.log('[UsersService] validateUser: matched', match);
             if (match) {
                 return Object.assign(Object.assign({}, user), { password: undefined });
             }
@@ -61,7 +56,6 @@ let UsersService = class UsersService {
         if (user.interests.split('_').includes(interest))
             return user;
         user.interests = user.interests + '_' + interest;
-        console.log('[UsersService] addInterest', user);
         return this.repository.save(user);
     }
     async removeInterest(interest, email) {
@@ -72,7 +66,6 @@ let UsersService = class UsersService {
             .split('_')
             .filter(userInterest => userInterest !== interest)
             .join('_');
-        console.log('[UsersService] removeInterest', user);
         return this.repository.save(user);
     }
 };

@@ -18,28 +18,28 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Post('addinterest')
   addInterest(@Request() req) {
-    console.log(`[UsersController] addInterest`, req.body);
+    // console.log(`[UsersController] addInterest`, req.body);
     return this.usersService.addInterest(req.body.interest, req.body.email);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('removeInterest')
   removeInterest(@Request() req) {
-    console.log(`[UsersController] removeInterest`, req.body);
+    // console.log(`[UsersController] removeInterest`, req.body);
     return this.usersService.removeInterest(req.body.interest, req.body.email);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('getInterests')
   getInterests(@Request() req) {
-    console.log(`[UsersController] getInterests`, req.body);
+    // console.log(`[UsersController] getInterests`, req.body);
     return this.usersService.getInterests(req.body.email);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('getUser')
   getUser(@Request() req) {
-    console.log(`[UsersController] getUser`, req.body);
+    // console.log(`[UsersController] getUser`, req.body);
     return this.usersService.findOneByUserEmail(req.body.email);
   }
 }

@@ -20,7 +20,7 @@ let ArticlesService = class ArticlesService {
         this.usersService = usersService;
     }
     async findByCategory(category) {
-        return this.repository.find({ where: { category: category } });
+        return (await this.repository.find({ where: { category: category } })).sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
     }
     async findByCategories(categories) {
         let articles = [];
@@ -29,14 +29,14 @@ let ArticlesService = class ArticlesService {
             const categoriesByCategory = await this.findByCategory(category);
             articles = [...articles, ...categoriesByCategory];
         }
-        return articles;
+        return articles.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
     }
     async findByUserEmail(ownerEmail) {
         const interests = await this.usersService.getInterests(ownerEmail);
-        return this.findByCategories(interests);
+        return (await this.findByCategories(interests)).sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
     }
     async findAll() {
-        return this.repository.find();
+        return (await this.repository.find()).sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
     }
 };
 __decorate([
