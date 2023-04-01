@@ -20,16 +20,24 @@ let LikeService = class LikeService {
     async likeArticle(req) {
         const userId = req.userId;
         const postId = req.postId;
-        const like = await this.likeRepository.findOne({ where: { userId, postId } });
+        const like = await this.likeRepository.findOne({
+            where: { userId, postId },
+        });
         if (like) {
             await this.likeRepository.remove(like);
-            const article = await this.articleRepository.findOne({ where: { postId: postId } });
+            const article = await this.articleRepository.findOne({
+                where: { postId: postId },
+            });
             article.score--;
             await this.articleRepository.save(article);
         }
         else {
-            const user = await this.userRepository.findOne({ where: { userId: userId } });
-            const article = await this.articleRepository.findOne({ where: { postId: postId } });
+            const user = await this.userRepository.findOne({
+                where: { userId: userId },
+            });
+            const article = await this.articleRepository.findOne({
+                where: { postId: postId },
+            });
             if (user && article) {
                 article.score++;
                 await this.articleRepository.save(article);

@@ -28,6 +28,10 @@ let AuthController = class AuthController {
     async register(req) {
         return this.authService.register(req);
     }
+    async confirm(req) {
+        console.log(`[AuthController] confirm`, req);
+        return this.authService.confirm(req.email, req.otp);
+    }
     getProfile(req) {
         return req.user;
     }
@@ -47,6 +51,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('confirm'),
+    __param(0, (0, decorators_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "confirm", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('profile'),

@@ -23,6 +23,12 @@ export class AuthController {
     return this.authService.register(req);
   }
 
+  @Post('confirm')
+  async confirm(@Body() req) {
+    console.log(`[AuthController] confirm`, req);
+    return this.authService.confirm(req.email, req.otp);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile') // this method is not that important, it is just for ensuring that jwt works)
   getProfile(@Request() req) {

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const crypto_1 = require("crypto");
 const typeorm_1 = require("typeorm");
 let User = class User {
 };
@@ -33,6 +34,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text' }),
     __metadata("design:type", String)
 ], User.prototype, "interests", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isEmailConfirmed", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: (0, crypto_1.randomInt)(1000, 10000) }),
+    __metadata("design:type", Number)
+], User.prototype, "otp", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)

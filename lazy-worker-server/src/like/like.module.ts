@@ -9,6 +9,6 @@ import { User } from 'src/users/user.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Like, Article, User])],
   providers: [LikeService],
-  controllers: [LikeController]
+  controllers: [LikeController],
 })
 export class LikeModule {}

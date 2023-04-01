@@ -7,4 +7,5 @@ export declare class UsersService {
     validateUser(email: string, password: string): Promise<User | undefined>;
     addInterest(interest: string, email: string): Promise<User | undefined>;
     removeInterest(interest: string, email: string): Promise<User | undefined>;
+    confirmEmail(user: User): Promise<User>;
 }

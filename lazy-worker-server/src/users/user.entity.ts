@@ -1,3 +1,4 @@
+import { randomInt } from 'crypto';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -26,9 +27,11 @@ export class User {
   // while retrieving this data it will be converted into array of strings
   // => ['WebDeveloper', 'Content Writer', 'Mobile Developer']
 
-  /*
-   * Create and Update Date Columns
-   */
+  @Column({ default: false })
+  public isEmailConfirmed: boolean;
+
+  @Column({ default: randomInt(1000, 10000) })
+  public otp: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;

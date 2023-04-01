@@ -15,10 +15,14 @@ const bcrypt = require("bcrypt");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./user.entity");
+const crypto_1 = require("crypto");
 let UsersService = class UsersService {
     async addUser(user) {
         if (!user.email || !user.name || !user.password) {
             throw new common_1.BadRequestException('Missing required fields');
+        }
+        if (await this.findOneByUserEmail(user.email)) {
+            throw new common_1.BadRequestException('This user aready exists');
         }
         const newuser = new user_entity_1.User();
         const salt = await bcrypt.genSalt();
@@ -29,6 +33,7 @@ let UsersService = class UsersService {
         newuser.interests = '';
         newuser.createdAt = new Date();
         newuser.updatedAt = newuser.createdAt;
+        newuser.otp = (0, crypto_1.randomInt)(1000, 10000);
         return this.repository.save(newuser);
     }
     async findOneByUserEmail(email) {
@@ -41,7 +46,7 @@ let UsersService = class UsersService {
     }
     async validateUser(email, password) {
         const user = await this.findOneByUserEmail(email);
-        if (user) {
+        if (user && user.isEmailConfirmed) {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 return Object.assign(Object.assign({}, user), { password: undefined });
@@ -66,6 +71,9 @@ let UsersService = class UsersService {
             .split('_')
             .filter(userInterest => userInterest !== interest)
             .join('_');
+        return this.repository.save(user);
+    }
+    async confirmEmail(user) {
         return this.repository.save(user);
     }
 };

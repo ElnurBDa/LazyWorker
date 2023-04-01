@@ -3,12 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/user.entity';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -36,11 +38,22 @@ export class AuthService {
     };
   }
 
-  async register(req: any): Promise<User | undefined> {
+  async register(req: any): Promise<number> {
     const user = await this.usersService.addUser(req);
-    let interests = user.interests.split('_');
-    interests = interests ? interests : [];
+    // let interests = user.interests.split('_');
+    // interests = interests ? interests : [];
     // console.log(`[AuthService] register`, user);
-    return { interests, ...user };
+    this.mailService.sendMail(user.email,user.otp);
+    return 1;
+  }
+
+  async confirm(email: string, otp: number): Promise<boolean> {
+    const user = await this.usersService.findOneByUserEmail(email);
+    if (otp == user.otp) {
+      user.isEmailConfirmed = true;
+      await this.usersService.confirmEmail(user)
+      return true;
+    }
+    return false;
   }
 }

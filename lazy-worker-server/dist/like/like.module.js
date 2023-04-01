@@ -20,7 +20,7 @@ LikeModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([like_entity_1.Like, article_entity_1.Article, user_entity_1.User])],
         providers: [like_service_1.LikeService],
-        controllers: [like_controller_1.LikeController]
+        controllers: [like_controller_1.LikeController],
     })
 ], LikeModule);
 exports.LikeModule = LikeModule;

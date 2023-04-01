@@ -6,6 +6,7 @@ import { TypeOrmConfigService } from './typeormanddb/typeormanddb.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { LikeModule } from './like/like.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { LikeModule } from './like/like.module';
     ArticlesModule,
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     LikeModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

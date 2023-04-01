@@ -15,6 +15,7 @@ const typeormanddb_service_1 = require("./typeormanddb/typeormanddb.service");
 const users_module_1 = require("./users/users.module");
 const config_1 = require("@nestjs/config");
 const like_module_1 = require("./like/like.module");
+const mail_module_1 = require("./mail/mail.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,6 +27,7 @@ AppModule = __decorate([
             articles_module_1.ArticlesModule,
             typeorm_1.TypeOrmModule.forRootAsync({ useClass: typeormanddb_service_1.TypeOrmConfigService }),
             like_module_1.LikeModule,
+            mail_module_1.MailModule,
         ],
         controllers: [],
         providers: [],

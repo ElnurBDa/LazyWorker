@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { randomInt } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,10 @@ export class UsersService {
   async addUser(user: any): Promise<User> {
     if (!user.email || !user.name || !user.password) {
       throw new BadRequestException('Missing required fields');
+    }
+
+    if (await this.findOneByUserEmail(user.email)){
+      throw new BadRequestException('This user aready exists');
     }
 
     const newuser: User = new User();
@@ -26,6 +31,8 @@ export class UsersService {
     newuser.interests = '';
     newuser.createdAt = new Date();
     newuser.updatedAt = newuser.createdAt;
+    newuser.otp = randomInt(1000, 10000);
+    
 
     // console.log(`[UsersService] addUser`, newuser);
     return this.repository.save(newuser);
@@ -49,7 +56,7 @@ export class UsersService {
   ): Promise<User | undefined> {
     const user = await this.findOneByUserEmail(email);
 
-    if (user) {
+    if (user && user.isEmailConfirmed) {
       // console.log('[UsersService] validateUser: found user', user);
 
       const match = await bcrypt.compare(password, user.password);
@@ -85,6 +92,10 @@ export class UsersService {
       .join('_');
 
     // console.log('[UsersService] removeInterest', user);
+    return this.repository.save(user);
+  }
+
+  async confirmEmail(user: User) {
     return this.repository.save(user);
   }
 }

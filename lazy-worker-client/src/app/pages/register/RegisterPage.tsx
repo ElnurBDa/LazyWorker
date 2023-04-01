@@ -8,9 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './registerPage.css'
 import { NotificationManager } from 'react-notifications'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
-import { useRegisterMutation } from '../../services/auth.service'
+import { useConfirmMutation, useRegisterMutation } from '../../services/auth.service'
 
 const schema = yup.object().shape({
   email: yup.string().email().min(5, 'Too Short!').max(50, 'Too Long!').required("Email is required"),
@@ -21,23 +21,42 @@ const schema = yup.object().shape({
 
 const RegisterPage = () => {
   const [register, { data, error, isLoading }] = useRegisterMutation()
+  const [confirm, dataErrorIsLoading] = useConfirmMutation()
   const navigate = useNavigate()
+  const [otpIsSent,setOtpIsSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
+  const [isConf,setIsconf] = useState(false);
 
   useEffect(() => {
     if (data && !error) {
-      console.log('RegisterPage:: data:', data)
-      NotificationManager.success(`Welcome ${data.name}, now login please`, 'Registration Success')
-      navigate('/login')
+      setOtpIsSent(true)
     } else if (error) {
       NotificationManager.error('Error registrating user, please check email, name or password.', 'Registration Error')
       console.log(`RegisterPage:: Authentication error`, error)
     }
   }, [data, error])
 
+  useEffect(() => {
+    confirmAndContinue()
+  }, [otp])
 
+  const confirmAndContinue =() =>{
+    if(isConf) {
+      navigate('/login');
+      NotificationManager.success(`Welcome ${data.name}, now login please`, 'Registration Success')
+    }
+  }
   const handleRegister = (formValue: { email: string; password: string, name:string }) => {
     const { email, password, name } = formValue
     register({ email, password, name })
+    setEmail(email);
+  }
+
+  const handleConfirm = () => {
+    confirm({email, otp});
+    setIsconf(dataErrorIsLoading.data);
+    confirmAndContinue()
   }
 
   return (
@@ -120,6 +139,15 @@ const RegisterPage = () => {
           </Card>
         )}
       </Formik>
+      {otpIsSent?<>
+        <Card style={{height:"170px", marginLeft:"20px"}}>
+        <Card.Title>Enter OTP</Card.Title>
+        It is sent to your email.
+        <input style={{marginBottom:"15px"}} type='number' onChange={(e) => setOtp(e.target.value)}/>
+        <Button type="submit" onClick={() => handleConfirm()}>Verify email</Button>
+        </Card>
+      </>:<>
+      </>}
     </div>
   )
 }

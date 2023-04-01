@@ -4,6 +4,8 @@ export declare class User {
     email: string;
     password: string;
     interests: string;
+    isEmailConfirmed: boolean;
+    otp: number;
     createdAt: Date;
     updatedAt: Date;
 }

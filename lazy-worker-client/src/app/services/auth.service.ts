@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { ILoginRequest } from '../interfaces/login.interface'
 import { IRegisterRequest } from '../interfaces/register.interface'
+import { IConfirmRequest } from '../interfaces/confirm.interface'
 
 
 export const authAPI = createApi({
@@ -24,7 +25,14 @@ export const authAPI = createApi({
         body: { email, password, name },
       }),
     }),
+    confirm: build.mutation<any, IConfirmRequest>({
+      query: ({ email, otp }) => ({
+        url: `confirm`,
+        method: 'POST',
+        body: { email, otp },
+      }),
+    }),
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation } = authAPI
+export const { useLoginMutation, useRegisterMutation, useConfirmMutation } = authAPI
