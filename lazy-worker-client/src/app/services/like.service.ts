@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { ILikeRequest } from '../interfaces/like.interface'
+import { apiPath, port } from './constants'
 
 
 export const likeAPI = createApi({
   reducerPath: 'likeAPI',
   tagTypes: ['Post'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/api/like/',
+    baseUrl: apiPath+":"+port.toString()+'/api/like/',
   }),
   endpoints: (build) => ({
     likeArticle: build.mutation<any, ILikeRequest>({

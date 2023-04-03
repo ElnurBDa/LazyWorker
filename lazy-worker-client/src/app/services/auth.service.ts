@@ -2,13 +2,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { ILoginRequest } from '../interfaces/login.interface'
 import { IRegisterRequest } from '../interfaces/register.interface'
 import { IConfirmRequest } from '../interfaces/confirm.interface'
+import { apiPath, port } from './constants'
 
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
   tagTypes: ['Post'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/api/auth/',
+    baseUrl: apiPath+":"+port.toString()+'/api/auth/',
   }),
   endpoints: (build) => ({
     login: build.mutation<any, ILoginRequest>({

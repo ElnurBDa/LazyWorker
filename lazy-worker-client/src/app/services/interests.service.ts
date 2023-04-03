@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../redux/store'
+import { apiPath, port } from './constants'
 
 export const interestsAPI = createApi({
   reducerPath: 'interestsAPI',
   tagTypes: ['Post'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/api/users/',
+    baseUrl: apiPath+":"+port.toString()+'/api/users/',
     prepareHeaders: (headers, { getState }) => {
       console.log('idk', (getState() as RootState).authReducer)
       const { access_token } = (getState() as RootState).authReducer
