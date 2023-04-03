@@ -9,7 +9,7 @@ export class MailService {
     console.log('[MailService] sendMail',userEmail,otp);
     this.mailerService.sendMail({
       to: userEmail,
-      from: 'LazyWorkerBHOS@gmail.com',
+      from: 'lazyworkermanager@gmail.com',
       subject: 'Confirm Your Email',
       text: otp.toString(),
     });
