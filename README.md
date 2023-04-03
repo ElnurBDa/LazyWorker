@@ -1,14 +1,28 @@
 # LazyWorker
 LazyWorker for lazy developers 
 
-## For using it properly
-1) download both folders
-2) in each of them open terminal
-3) npm install
-4) npm run start
-5) enjoy
+## For using it locally
 
-there would be problems with nestjs, you will need to install some packets.
 
-If you are not Elnur, better ask Elnur.
+Front - React
+Back - NestJS
+Database - Postqres
 
+
+### Client 
+
+1) npm install
+2) npm run start
+
+
+### Server
+
+1) npm install
+2) npm run start
+
+
+### Database
+
+1) psql -U (username)
+2) (password)
+3) CREATE DATABASE (db_name);
